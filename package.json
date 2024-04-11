@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@react-native-voice/voice": "^3.2.4",
-    "axios": "^1.6.8",
-    "react-native-tts": "^4.1.0"
-  }
-}
