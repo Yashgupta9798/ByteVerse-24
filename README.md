@@ -1,30 +1,40 @@
-# WORKTHROUGH
 
-- We have a App for the people who knows english but can't able to communicate with other people so first the user will think about taking a tutor or contacting to the other people who knows english well and can able to correct him/her. So we came across an innovative idea so that one can learn to conversate in english with the other people independently and more correctly according to their comfort.
-
-
-# AT THE FRONTEND PART
-
-- In the front end part we are using the react-native for creating our App.If the user click the mic button then he can give the prompt in the voice formate and it will automatically get the reply in the text and voice formate.
-
-- we have a three line at top left corner in which user can access the information about us and they can find the help section there.
-
-- By clicking in the stop button the user can see his/her all the conversation over the week and he can also able to analyze his performance over the week.
+# TalkMates (By team AppComet) [Title]
 
 
-# AT THE BACKEND PART
-
-- At the backend we are using the tech-stack such as MongoDB,NodeJS,ExpressJS,Ollama as AI Language model.
-
-- When the user will click the mic button and giving the input as Voice then it get converted into "TEXT" with the help of React-native Library called "react-native-voice/voice" then this data will be get stored in the data base using MongoDB database.
-
-- Now this data will be fetched thorugh Axios "GET" request to our local server where Ollama model ("called Mistral") has already been installed, this wiil give the user response, it's correct form without any Grammatical error.
+# Description
+ - The app is a complete solution for those learners who really want to improve their english speaking skills. Here the user can conversate with the ai and after the conversation they can even check the better way of saying the sentence they have already spoken in a chat like interface so that they can learn from there mistakes. And inorder to track their progress we also have the progress tracking mechanism which will help user to track his/her improvement.
 
 
+# Tech Stack
 
- #PptLink
-- https://docs.google.com/presentation/d/12U9eCm1cHpNvKzGEVRroFUR7kUOFpzy5/edit?usp=drive_link&ouid=102995024615844979378&rtpof=true&sd=true
+1. **React-Native**: We chose react-native because using it we can create the application compatible for both android as well as ios at the same time.
 
+2. **Node.js** && **Express.js** : This helps us to create the server for our application, making it easy to handle the voice requests from the user and providing the required response to it as well.
 
- #workingVideo
+3. **Ollama** : Here is the place where our model is running (model is running locally in the server but by the help of ollama)
+
+# Installation steps:
+
+## Applicaiton setup
+
+1. You can clone our repository.
+2. You have to make an android studio setup first so that you can run our application.
+3. After setting up the android studio, you can connect your phone with the usb to the laptop.
+4. Open the project inside any IDE or VScode and naviagate through the `App` directory and write `npm install` in the terminal after that write `npm run android`.
+
+## Server setup
+
+1. After setting up the App, open another terminal
+2. Navigate through the server directory and hit the `npm install` in the terminal and then `npm run dev`.
+3. And server will also start running on the port 3000.
+
+## Additional setup
+
+1. You have to navigate through every "fetch" or "axios" written code and have to change the domain from `192.168.208.216` to `127.0.0.1`.
+
+# Libraries and Dependencies
+1. They are too many to name them, you can see them all in the package.json under `dependencies` property.
+
+ # Link to Video
  - https://youtu.be/ERSNnEuPFH0?si=L_1zy1bPBKCVo4iFl
