@@ -18,10 +18,13 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack"
 //screens
 import Home from './screens/Home';
 import Details from './screens/Details';
+import Progress from './screens/ProgressScreen'
+import ProgressScreen from './screens/ProgressScreen';
 
 export type RootStackParamList = {
   Home: undefined;
-  Details: {productId: string}
+  Details: {productId: string};
+  ProgressScreen: {productId: string};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -43,7 +46,14 @@ function App(): JSX.Element {
         name='Details'
         component={Details}
         options={{
-          title: "Product Details"
+          title: "Conversatation Details"
+        }}
+        />
+        <Stack.Screen
+        name='ProgressScreen'
+        component={ProgressScreen}
+        options={{
+          title: "Progress Details"
         }}
         />
         

@@ -61,11 +61,41 @@ export default function Home({navigation}: HomeProps) {
 
   //! sending request to the backend
 
-  const sendingRequestToBackend = async prompt => {
+  const sendingRequestToBackend = async (prompt) => {
     try {
-      console.log(e.value[0]);
+      prompt = "can we talk for a few moments";
       const body = {prompt};
-      const res = await responseFromModel({prompt: prompt, model: 'mistral'});
+
+     console.log("body: ",body)
+      
+      // const res = await responseFromModel({prompt: prompt, model: 'mistral'});
+
+      // const res = await axios.post("http://192.168.208.216:3000/send",body,{
+      //   headers:{
+      //     "Content-Type":"application/json"
+      //   }
+      // })
+
+      // const res = await axios.post("https://jsonplaceholder.typicode.com/posts",body,{
+      //   headers:{
+      //     "Content-Type":"application/json"
+      //   }
+      // })
+
+      const res = await axios.get("https://192.168.208.216:3000/")
+      // const res = await axios.get("https://192.168.208.216:3000/",body,{
+      //   headers:{
+      //         "Content-Type":"application/json"
+      //       }
+      // })
+
+      console.log("response from the backend: ",res.data);
+
+      // 192.168.208.216
+
+
+
+
 
       if (res.data.success) {
         setResponse(res.data.message);
@@ -79,51 +109,52 @@ export default function Home({navigation}: HomeProps) {
         });
       }
     } catch (err) {
-      console.error('Error:', err);
+      console.error('Error(while sending the messages): ', err);
       Tts.getInitStatus().then(() => {
         Tts.speak('Some Error Occurred');
       });
-      setResponse('Some error occurred: ' + err.message);
+      setResponse('Some error occurred: '+err.message);
     }
   };
 
   //! Response from the model
-  function responseFromModel(body) {
-    return new Promise((res, rej) => {
-      let respFromModel = '';
+  // function responseFromModel(body) {
+  //   return new Promise((res, rej) => {
+  //     let respFromModel = '';
 
-      axios
-        .post('http://127.0.0.1:11434/api/generate', body, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          responseType: 'stream', // Set responseType to 'stream'
-        })
-        .then(response => {
-          // Handle the stream
-          response.data.on('data', chunk => {
-            const lines = chunk.toString().split('\n');
-            lines.forEach(line => {
-              if (line) {
-                // Ignore empty lines
-                const json = JSON.parse(line);
-                respFromModel += json.response;
-                // console.log("respFromModel: ",respFromModel)
-              }
-            });
-          });
+  //     axios
+  //       .post('http://127.0.0.1:11434/api/generate', body, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         responseType: 'stream', // Set responseType to 'stream'
+  //       })
+  //       .then(response => {
+  //         // Handle the stream
+  //         response.data.on('data', chunk => {
+  //           const lines = chunk.toString().split('\n');
+  //           lines.forEach(line => {
+  //             if (line) {
+  //               // Ignore empty lines
+  //               const json = JSON.parse(line);
+  //               respFromModel += json.response;
+  //               // console.log("respFromModel: ",respFromModel)
+  //             }
+  //           });
+  //         });
 
-          response.data.on('end', () => {
-            console.log('Stream ended');
-            // return respFromModel;
-            res(respFromModel);
-          });
-        })
-        .catch(err => {
-          throw new Error(err.message);
-        });
-    });
-  }
+  //         response.data.on('end', () => {
+  //           console.log('Stream ended');
+  //           // return respFromModel;
+  //           res(respFromModel);
+  //         });
+  //       })
+  //       .catch(err => {
+  //         throw new Error(err.message);
+  //       });
+  //   });
+  // }
+
 
   //!VOICE TO TEXT SECTION
   const Stack = createNativeStackNavigator();
@@ -267,6 +298,39 @@ export default function Home({navigation}: HomeProps) {
         </View>
       </View>
 
+      {/* ***********************PROGRESS SECTION SCREEN ********************** */}
+
+      <View style={styles.ProgressContainer}>
+        <View>
+        </View>
+        <Button
+            title="PROGRESS"
+            //   onPress={()=>navigation.navigate("Details",{productId:"86"})}
+            onPress={() =>{
+              navigation.push('ProgressScreen', {
+                productId: '86',
+              })
+              handleStopTimer()}
+            }
+            color="blue"
+          />
+      </View>
+
+        {/* <View>
+          <Text
+            style={{
+              color: 'white',
+              position: 'absolute',
+              bottom: 8,
+              left: 14,
+              fontStyle: 'italic',
+            }}>
+            PROGRESS
+          </Text>
+        </View> */}
+
+        
+
       {/* ************************* THREE LINE SECTION ******************************* */}
       <View style={styles.TopThreeLine}>
         <TouchableOpacity
@@ -315,13 +379,21 @@ export default function Home({navigation}: HomeProps) {
       </TouchableOpacity> */}
       </View>
 
+      <View>
+        <Text style={{fontSize:18,color:'red '}}>
+          {response}
+        </Text>
+      </View>
+
       {/* ***************************************MIC SECTION *************************************************************** */}
 
       <View style={styles.MicLogo}>
         <TouchableOpacity
           onPress={() => {
-            if (!isListening){ startRecognizing(); moveBall(true) ; handleStartTimer()}
-            else {stopRecognizing();moveBall(false)}
+            // if (!isListening){ startRecognizing(); moveBall(true) ; handleStartTimer()}
+            // else {stopRecognizing();moveBall(false)}
+            console.log("I am sending the text to backend");
+            sendingRequestToBackend("Axios Error");
           }}>
           <Image
             source={{
@@ -363,7 +435,7 @@ const styles = StyleSheet.create({
 
   MicLogo: {
     position: 'relative',
-    top: 550,
+    top: 410,
     left: 150,
     justifyContent: 'center',
     backgroundColor: 'pink',
@@ -399,4 +471,13 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize:25
   },
+
+  ProgressContainer:{
+    width:120,
+    height:74,
+    position:"absolute",
+    left:94,
+    top:10,
+    
+  }
 });
